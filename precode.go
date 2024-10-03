@@ -16,10 +16,11 @@ import (
 func Generator(ctx context.Context, ch chan<- int64, fn func(int64)) {
 	// 1. Функция Generator
 	// DONE
+	defer close(ch)
+
 	for i := 0; ; i++ {
 		select {
 		case <-ctx.Done():
-			close(ch)
 			return
 		default:
 			ch <- int64(i)
